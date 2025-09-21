@@ -6,14 +6,12 @@ from .config import settings
 
 ALGORITHM = "HS256"
 
-# demo user store (replace with real DB if you like)
 DEMO_USER = {
     "username": "admin",
     "full_name": "Admin User",
     "hashed_password": "$2b$12$Y.QxvM9W1sA5kC2H0k3r8OSv1yfdvQqXxq8x3C1L8m3y8g1m6q0r2"  # bcrypt for 'admin123'
 }
 
-# password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:

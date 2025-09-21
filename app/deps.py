@@ -1,10 +1,9 @@
-# app/deps.py
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 
 from .config import settings
-from .db import get_db  # keep if other deps use it
+from .db import get_db
 from .security import DEMO_USER, ALGORITHM
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")

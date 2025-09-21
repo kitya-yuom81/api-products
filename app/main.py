@@ -4,10 +4,8 @@ from .config import settings
 from .db import Base, engine
 from .routers import products, auth
 
-# Create database tables
 Base.metadata.create_all(bind=engine)
 
-# Initialize app
 app = FastAPI(
     title=settings.APP_NAME,
     openapi_tags=[
@@ -19,7 +17,6 @@ app = FastAPI(
     ],
 )
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ALLOW_ORIGINS,
@@ -28,12 +25,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
 app.include_router(auth.router, prefix=settings.API_PREFIX)
 app.include_router(products.router, prefix=settings.API_PREFIX)
 
 
-# Healthcheck / Welcome
 @app.get("/", tags=["meta"])
 def root():
     return {
