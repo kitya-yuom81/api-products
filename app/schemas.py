@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 
 class ProductBase(BaseModel):
@@ -18,9 +18,7 @@ class ProductUpdate(BaseModel):
 
 class ProductOut(ProductBase):
     id: int
-
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)  # replaces orm_mode=True in v2
 
 class Token(BaseModel):
     access_token: str

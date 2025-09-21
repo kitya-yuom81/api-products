@@ -1,6 +1,6 @@
-from sqlalchemy.orm import Session
-from sqlalchemy import select
 from typing import Sequence
+from sqlalchemy import select
+from sqlalchemy.orm import Session
 from . import models, schemas
 
 def create_product(db: Session, data: schemas.ProductCreate) -> models.Product:
@@ -20,21 +20,26 @@ def list_products(
     limit: int = 50,
     q: str | None = None,
     category: str | None = None,
-    sort_by: str = "product_id",   # default updated
-    order: str = "asc",
+    sort_by: str = "id",      # id | name | price | category
+    order: str = "asc",       # asc | desc
 ) -> Sequence[models.Product]:
     stmt = select(models.Product)
+
     if q:
         like = f"%{q.lower()}%"
         stmt = stmt.where(models.Product.name.ilike(like))
+
     if category:
         stmt = stmt.where(models.Product.category == category)
-    # simple sorting
-    sort_col = getattr(models.Product, sort_by, models.Product.product_id)
-    stmt = stmt.order_by(sort_col.desc() if order.lower() == "desc" else sort_col.asc())
-    stmt = stmt.offset(skip).limit(limit)
-    return db.execute(stmt).scalars().all()
 
+    # sorting
+    sort_col = getattr(models.Product, sort_by, models.Product.id)
+    stmt = stmt.order_by(sort_col.desc() if order.lower() == "desc" else sort_col.asc())
+
+    # pagination
+    stmt = stmt.offset(skip).limit(limit)
+
+    return db.execute(stmt).scalars().all()
 
 def replace_product(db: Session, pid: int, data: schemas.ProductCreate) -> models.Product | None:
     prod = get_product(db, pid)
