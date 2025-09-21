@@ -7,3 +7,5 @@ python-jose[cryptography]
 passlib[bcrypt]
 httpx
 pytest
+pydantic-settings
+python-multipart==0.0.20
