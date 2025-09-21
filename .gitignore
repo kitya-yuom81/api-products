@@ -1,0 +1,42 @@
+# created by virtualenv automatically
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# Environment variables
+.env
+.env.*
+
+# SQLite database
+*.db
+*.sqlite3
+
+# IDE/editor stuff
+.vscode/
+.idea/
+
+# Logs & cache
+*.log
+*.pid
+*.gz
+*.coverage
+.coverage.*
+htmlcov/
+.cache/
+
+# Pytest
+.pytest_cache/
+
+# Byte-compiled
+*.egg-info/
+dist/
+build/
