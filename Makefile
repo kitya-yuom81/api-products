@@ -1,13 +1,10 @@
 .PHONY: dev seed test
 
-
 dev:
-uvicorn app.main:app --reload
-
+	uvicorn app.main:app --reload
 
 seed:
-python seed.py
-
+	python seed.py
 
 test:
-pytest -q
+	pytest -q
