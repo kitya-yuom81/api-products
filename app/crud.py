@@ -20,7 +20,7 @@ def list_products(
     limit: int = 50,
     q: str | None = None,
     category: str | None = None,
-    sort_by: str = "id",
+    sort_by: str = "product_id",   # default updated
     order: str = "asc",
 ) -> Sequence[models.Product]:
     stmt = select(models.Product)
@@ -30,10 +30,11 @@ def list_products(
     if category:
         stmt = stmt.where(models.Product.category == category)
     # simple sorting
-    sort_col = getattr(models.Product, sort_by, models.Product.id)
+    sort_col = getattr(models.Product, sort_by, models.Product.product_id)
     stmt = stmt.order_by(sort_col.desc() if order.lower() == "desc" else sort_col.asc())
     stmt = stmt.offset(skip).limit(limit)
     return db.execute(stmt).scalars().all()
+
 
 def replace_product(db: Session, pid: int, data: schemas.ProductCreate) -> models.Product | None:
     prod = get_product(db, pid)
